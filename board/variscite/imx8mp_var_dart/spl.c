@@ -250,6 +250,10 @@ int power_init_board(void)
 	/* Enable I2C level translator */
 	pmic_reg_write(p, PCA9450_CONFIG2, 0x03);
 
+	/* Set BUCK5 voltage to 1.825V to fix Ethernet PHY reset */
+	if (var_detect_board_id() == BOARD_ID_DART)
+		pmic_reg_write(p, PCA9450_BUCK5OUT, 0x31);
+
 	return 0;
 }
 #endif
